@@ -14,6 +14,7 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 {-# LANGUAGE TemplateHaskell, ScopedTypeVariables #-}
+{-# LANGUAGE CPP #-}
 {-# OPTIONS_GHC -fforce-recomp #-}
 
 {-|
@@ -33,9 +34,15 @@ import Language.Haskell.TH
 import System.Directory
 import System.FilePath
 import System.IO.Temp
+#ifdef mingw32_HOST_OS
+import System.PosixCompat.Files
+import System.PosixCompat.Time
+import System.PosixCompat.Types
+#else
 import System.Posix.Files
 import System.Posix.Time
 import System.Posix.Types
+#endif
 import Prelude
 
 import CabalHelper.Compiletime.Compat.Environment
